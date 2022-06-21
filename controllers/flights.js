@@ -1,8 +1,13 @@
 import { Flight } from "../models/flight.js"
 
 function index(req, res) {
-  Flight.find({})
+  Flight.find({}).sort({'departs' : 'asc'})
   .then(flights => {
+    flights.forEach(flight => {
+      if (flight.departs.toISOString() < new Date().toISOString()) {
+        flight.color = 'red'
+      }
+    })
     res.render('flights/index', {
       flights: flights,
       title: 'All Flights'
@@ -11,12 +16,21 @@ function index(req, res) {
 }
 
 function newFlight(req, res) {
+  const newFlight = new Flight();
+  // Obtain the default date
+  const dt = newFlight.departs;
+  // Format the date for the value attribute of the input
+  const formattedDate = dt.toISOString().slice(0, 16);
   res.render('flights/new', {
-    title: 'Add Flight'
-  })
+    title: 'Add Flight',
+    departs: formattedDate
+  });
 }
 
 function create(req, res) {
+  for (let key in req.body) {
+	  if (req.body[key] === '') delete req.body[key]
+	}
   Flight.create(req.body)
   .then(flight => {
     console.log('flight created')

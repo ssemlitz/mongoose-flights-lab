@@ -22,7 +22,11 @@ const flightSchema = new Schema({
   departs: {
     type: Date,
     default: function () {
-      return new Date(+new Date() + 7*24*60*60*1000)
+      // return new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+      const today = new Date()
+      const oneYearFromNow = today.getFullYear() + 1
+      today.setFullYear(oneYearFromNow)
+      return today
     }
   }
 },

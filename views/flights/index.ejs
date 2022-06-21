@@ -1,6 +1,7 @@
 <%- include('../partials/html-head') %>
-<link rel="stylesheet" href="/stylesheets/flights/index.css" />
+<link rel="stylesheet" href="/stylesheets/flights/index.css">
 <%- include('../partials/nav') %>
+
 
 <main>
   <h1>Flight List</h1>
@@ -16,9 +17,9 @@
     </thead>
     <tbody>
       <% flights.forEach(flight => { %>
-        <tr>
+        <tr class="<%= flight.color %>">
           <td><form action="/flights/<%= flight._id %>?_method=DELETE" class="delete-form" method="POST">
-            <button type="submit">x</button>
+            <button type="submit">X</button>
           </form></td>
           <td><%= flight.airline %></td>
           <td><%= flight.airport %></td>
