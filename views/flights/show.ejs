@@ -4,10 +4,10 @@
 
 <main>
   <h1><%= title %></h1>
+  <a href="/flights/<%= flight._id %>/edit">
+    <button>Edit Flight</button>
+  </a>
   <section>
-    <a href="/flights/<%= flight._id %>/edit">
-      <button>Edit Flight</button>
-    </a>
     <div>Airline: </div>
     <div><%= flight.airline %></div>
     <div>Airport: </div>
@@ -16,8 +16,22 @@
     <div><%= flight.flightNo %></div>
     <div>Departure: </div>
     <div><%= flight.departs %></div>
-  </section>
+    <div>Meals:</div>
+  <ul>
+    <% flight.meals.forEach(meal => { %>
+      <li><%= meal.name %></li>
+    <% }) %>
+  </ul>
 </section>
+<form id="add-meal-to-cast" action="/flights/<%= flight._id %>/meals" method="POST">
+  <select name="mealId" id="">
+    <% meals.forEach(meal => { %>
+      <option value="<%= meal._id %>"><%= meal.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Add to Meals</button>
+</form>
+  </section>
 <% // new markup below %>
 <h2>Tickets</h2>
 <form 
